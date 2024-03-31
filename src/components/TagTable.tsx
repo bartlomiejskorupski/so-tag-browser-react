@@ -5,36 +5,61 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
 } from '@mui/material';
 import { useGetTagsQuery } from '../store/service/tags-api';
+import { useCallback, useMemo, useState } from 'react';
 
 export default function TagTable() {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const { data, isLoading, isError } = useGetTagsQuery();
 
-  console.log(data);
+  const handleChangePage = useCallback(
+    (_: unknown, newPage: number) => {
+      setPage(newPage);
+    },
+    [setPage]
+  );
+
+  const pagedTags = useMemo(() => {
+    return data?.items.slice(
+      page * rowsPerPage,
+      page * rowsPerPage + rowsPerPage
+    );
+  }, [data, page, rowsPerPage]);
 
   return (
-    <TableContainer
-      component={Paper}
-      className="mx-8 my-4 w-auto md:min-w-[70%] md:mx-auto"
-    >
-      <Table aria-label="tag-table" stickyHeader>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Count</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data?.items?.map((t) => (
-            <TableRow key={t.name}>
-              <TableCell>{t.name}</TableCell>
-              <TableCell>{t.count}</TableCell>
+    <Paper>
+      <TableContainer className="max-h-[400px]">
+        <Table aria-label="tag-table" stickyHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Count</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {pagedTags?.map((t) => (
+              <TableRow key={t.name}>
+                <TableCell>{t.name}</TableCell>
+                <TableCell>
+                  <span className="text-stone-600">{t.count}</span>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        component="div"
+        rowsPerPage={10}
+        rowsPerPageOptions={[10]}
+        count={data?.items.length ?? 0}
+        page={page}
+        onPageChange={handleChangePage}
+      ></TablePagination>
+    </Paper>
   );
 }
