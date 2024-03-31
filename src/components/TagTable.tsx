@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertTitle,
   Paper,
   Table,
   TableBody,
@@ -15,10 +17,7 @@ import TagTableSkeleton from './TagTableSkeleton';
 export default function TagTable() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const { data, isLoading, isError: dataError } = useGetTagsQuery();
-
-  const isError = true;
-  // const isLoading = false;
+  const { data, isLoading, isError } = useGetTagsQuery();
 
   const handleChangePage = useCallback(
     (_: unknown, newPage: number) => {
@@ -34,12 +33,21 @@ export default function TagTable() {
     );
   }, [data, page, rowsPerPage]);
 
+  if (isError) {
+    return (
+      <Alert severity="error" variant="filled">
+        <AlertTitle>Error</AlertTitle>
+        There was an error loading tags. Please try again later.
+      </Alert>
+    );
+  }
+
   return (
     <>
       {isLoading && <TagTableSkeleton rowCount={4} />}
       {!isLoading && (
-        <Paper>
-          <TableContainer className="max-h-[400px]">
+        <Paper className="overflow-clip">
+          <TableContainer className="max-h-[426px]">
             <Table aria-label="tag-table" stickyHeader>
               <TableHead>
                 <TableRow>
@@ -61,8 +69,8 @@ export default function TagTable() {
           </TableContainer>
           <TablePagination
             component="div"
-            rowsPerPage={10}
-            rowsPerPageOptions={[10]}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={[rowsPerPage]}
             count={data?.items.length ?? 0}
             page={page}
             onPageChange={handleChangePage}

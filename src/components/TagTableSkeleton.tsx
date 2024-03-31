@@ -17,9 +17,16 @@ export default function TagTableSkeleton({ rowCount }: TagTableSkeletonProps) {
         <Grid item xs={6}>
           <Skeleton className="w-[5ch] m-4" />
         </Grid>
-        {[...new Array(cellsCount)].map(() => (
+        {[...new Array(cellsCount)].map((_, i) => (
           <Grid item xs={6}>
-            <Box borderTop="1px solid rgba(128, 128, 128, 0.3)">
+            <Box
+              borderTop="1px solid rgba(128, 128, 128, 0.3)"
+              borderBottom={
+                i >= cellsCount - 2
+                  ? '1px solid rgba(128, 128, 128, 0.3)'
+                  : undefined
+              }
+            >
               <Skeleton className="w-[10ch] m-4" />
             </Box>
           </Grid>
