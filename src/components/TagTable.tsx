@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { useGetTagsQuery } from '../store/service/tags-api';
 import { useCallback, useMemo, useState } from 'react';
-import TagTableSkeleton from './TagTableSkeleton';
+import TableSkeleton from './UI/TableSkeleton';
 
 export default function TagTable() {
   const [page, setPage] = useState(0);
@@ -44,7 +44,11 @@ export default function TagTable() {
 
   return (
     <>
-      {isLoading && <TagTableSkeleton rowCount={4} />}
+      {isLoading && (
+        <Paper>
+          <TableSkeleton columnCount={2} rowCount={4} />
+        </Paper>
+      )}
       {!isLoading && (
         <Paper className="overflow-clip">
           <TableContainer className="max-h-[426px]">
