@@ -39,9 +39,10 @@ export default function CustomTable({
     [setPage]
   );
 
-  const pagedData = useMemo(() => {
-    return data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-  }, [data, page, rowsPerPage]);
+  const pagedData = useMemo(
+    () => data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+    [data, page, rowsPerPage]
+  );
 
   return (
     <>
@@ -49,8 +50,9 @@ export default function CustomTable({
         <Table aria-label="tag-table" stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Count</TableCell>
+              {Object.values(columnDefinitions).map((val) => (
+                <TableCell key={val}>{val}</TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -59,7 +61,7 @@ export default function CustomTable({
                 <TableRow key={t?.[idColumn]}>
                   {Object.keys(columnDefinitions).map((key) => (
                     <TableCell key={`${t?.[idColumn]} ${t[key]}`}>
-                      {t[key]}
+                      {t[key].toString()}
                     </TableCell>
                   ))}
                 </TableRow>

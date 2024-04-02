@@ -27,7 +27,10 @@ export default function TagTable() {
           <CustomTable
             data={data.items}
             idColumn="name"
-            columnDefinitions={{ name: 'Name', count: 'Count' }}
+            columnDefinitions={{
+              name: 'Name',
+              count: 'Count',
+            }}
             rowsPerPage={10}
           />
         </Paper>
