@@ -1,5 +1,7 @@
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { Divider, Icon, Skeleton } from '@mui/material';
+import { Fragment } from 'react/jsx-runtime';
+import { range } from '../../utils/array-utils';
 
 export interface TableSkeletonProps {
   columnCount?: number;
@@ -16,23 +18,23 @@ export default function TableSkeleton({
   return (
     <>
       <div className="p-4 flex justify-between gap-2">
-        {[...new Array(columns)].map((_, i) => (
+        {range(columns).map((i) => (
           <div key={i} className="flex-1">
             <Skeleton className="max-w-[5ch]" />
           </div>
         ))}
       </div>
-      {[...new Array(rows)].map((_, i) => (
-        <>
-          <Divider key={`di${i}`} />
-          <div key={`d${i}`} className="p-4 flex justify-between gap-2">
-            {[...new Array(columns)].map((_, i) => (
-              <div className="flex-1" key={`r${i}`}>
+      {range(rows).map((i) => (
+        <Fragment key={`hr${i}`}>
+          <Divider />
+          <div className="p-4 flex justify-between gap-2">
+            {range(columns).map((j) => (
+              <div className="flex-1" key={`c${i}${j}`}>
                 <Skeleton className="max-w-[12ch]" />
               </div>
             ))}
           </div>
-        </>
+        </Fragment>
       ))}
       <Divider />
       <div className="py-4 pr-2 flex justify-end items-center gap-4">

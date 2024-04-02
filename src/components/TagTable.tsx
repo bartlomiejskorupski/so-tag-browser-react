@@ -44,7 +44,7 @@ export default function TagTable() {
 
   return (
     <>
-      {isLoading && (
+      {!isLoading && (
         <Paper>
           <TableSkeleton columnCount={2} rowCount={4} />
         </Paper>
