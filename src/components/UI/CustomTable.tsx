@@ -23,6 +23,7 @@ type DataType = {
 };
 
 export interface CustomTableProps {
+  className?: string;
   data: DataType[];
   columnDefinitions: ColumnDefinitions;
   idColumn: string;
@@ -30,6 +31,7 @@ export interface CustomTableProps {
 }
 
 export default function CustomTable({
+  className,
   data,
   columnDefinitions,
   idColumn,
@@ -56,7 +58,7 @@ export default function CustomTable({
 
   return (
     <>
-      <TableContainer className="max-h-[426px]">
+      <TableContainer className={`${className} max-h-[426px]`}>
         <Table aria-label="tag-table" stickyHeader>
           <TableHead>
             <TableRow>

@@ -32,8 +32,14 @@ export default function TagTable() {
             data={data.items}
             idColumn="name"
             columnDefinitions={{
-              name: { label: 'Name', className: '' },
-              count: { label: 'Count' },
+              name: {
+                label: 'Tag Name',
+                className: 'px-3 py-1 rounded-3xl bg-sky-100 text-sky-700',
+              },
+              count: {
+                label: 'Related Posts',
+                className: 'text-stone-600',
+              },
             }}
             rowsPerPage={rowsPerPage}
           />

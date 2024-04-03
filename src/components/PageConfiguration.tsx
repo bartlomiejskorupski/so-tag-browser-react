@@ -40,7 +40,7 @@ export default function PageConfiguration() {
   );
 
   return (
-    <Paper className="max-w-fit py-3 px-4 mb-2">
+    <Paper className="max-w-fit mx-auto py-3 px-4 mb-2">
       <div className="flex items-center gap-2">
         <TextField
           className="flex-1"

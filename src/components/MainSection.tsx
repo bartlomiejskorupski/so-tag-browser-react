@@ -5,7 +5,7 @@ export interface MainSectionProps extends PropsWithChildren {}
 
 export default function MainSection({ children }: MainSectionProps) {
   return (
-    <Container component="main" className="md:max-w-5xl">
+    <Container component="main" className="sm:max-w-xl">
       {children}
     </Container>
   );
