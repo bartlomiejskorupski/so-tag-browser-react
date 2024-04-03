@@ -9,8 +9,13 @@ import {
   TableRow,
 } from '@mui/material';
 
+type ColumnOptions = {
+  label: string;
+  className?: string;
+};
+
 type ColumnDefinitions = {
-  [name: string]: string;
+  [name: string]: ColumnOptions;
 };
 
 type DataType = {
@@ -51,22 +56,22 @@ export default function CustomTable({
           <TableHead>
             <TableRow>
               {Object.values(columnDefinitions).map((val) => (
-                <TableCell key={val}>{val}</TableCell>
+                <TableCell key={val.label}>{val.label}</TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {pagedData?.map((t) => {
-              return (
-                <TableRow key={t?.[idColumn]}>
-                  {Object.keys(columnDefinitions).map((key) => (
-                    <TableCell key={`${t?.[idColumn]} ${t[key]}`}>
+            {pagedData?.map((t) => (
+              <TableRow key={t?.[idColumn]}>
+                {Object.keys(columnDefinitions).map((key) => (
+                  <TableCell key={`${t?.[idColumn]} ${t[key]}`}>
+                    <span className={columnDefinitions[key].className}>
                       {t[key].toString()}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              );
-            })}
+                    </span>
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

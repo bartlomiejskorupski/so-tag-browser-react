@@ -28,8 +28,8 @@ export default function TagTable() {
             data={data.items}
             idColumn="name"
             columnDefinitions={{
-              name: 'Name',
-              count: 'Count',
+              name: { label: 'Name', className: '' },
+              count: { label: 'Count' },
             }}
             rowsPerPage={10}
           />
