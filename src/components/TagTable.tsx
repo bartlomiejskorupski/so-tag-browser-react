@@ -39,6 +39,7 @@ export default function TagTable() {
               count: {
                 label: 'Related Posts',
                 className: 'text-stone-600',
+                numeric: true,
               },
             }}
             rowsPerPage={rowsPerPage}
