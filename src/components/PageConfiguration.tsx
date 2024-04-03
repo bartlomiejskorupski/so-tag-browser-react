@@ -1,8 +1,19 @@
 import { Button, Paper, TextField } from '@mui/material';
-import { ChangeEvent, useCallback, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  useCallback,
+  useRef,
+  useState,
+} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { uiActions, uiSelector } from '../store/slice/ui-slice';
 
 export default function PageConfiguration() {
-  const [value, setValue] = useState('10');
+  const { rowsPerPage } = useSelector(uiSelector);
+  const dispatch = useDispatch();
+
+  const [value, setValue] = useState(`${rowsPerPage}`);
   const textFieldRef = useRef<HTMLInputElement>();
 
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -11,20 +22,42 @@ export default function PageConfiguration() {
   }, []);
 
   const handleApplyClick = useCallback(() => {
-    console.log(textFieldRef.current?.value);
-  }, []);
+    const fieldValue = textFieldRef.current?.value;
+    if (!fieldValue || +fieldValue <= 0) {
+      return;
+    }
+    dispatch(uiActions.changeRowsPerPage(+fieldValue));
+  }, [textFieldRef, dispatch]);
+
+  const handleTextFieldKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.code !== 'Enter') {
+        return;
+      }
+      handleApplyClick();
+    },
+    [handleApplyClick]
+  );
 
   return (
     <Paper className="max-w-fit py-3 px-4 mb-2">
       <div className="flex items-center gap-2">
         <TextField
+          className="flex-1"
           inputRef={textFieldRef}
           type="number"
           label="Rows per page"
           onChange={handleInputChange}
+          onKeyDown={handleTextFieldKeyDown}
           value={value}
         />
-        <Button variant="contained" onClick={handleApplyClick}>
+        <Button
+          variant="contained"
+          disabled={
+            !textFieldRef.current?.value || +textFieldRef.current?.value <= 0
+          }
+          onClick={handleApplyClick}
+        >
           Apply
         </Button>
       </div>

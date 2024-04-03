@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import tagsReducer from './slice/tags-slice';
+import uiReducer from './slice/ui-slice';
 import { tagsApi } from './service/tags-api';
 
 export const store = configureStore({
   reducer: {
-    tags: tagsReducer,
+    ui: uiReducer,
     [tagsApi.reducerPath]: tagsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

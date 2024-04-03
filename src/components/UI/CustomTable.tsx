@@ -49,6 +49,11 @@ export default function CustomTable({
     [data, page, rowsPerPage]
   );
 
+  // Check if we're out of bounds
+  if (data.length !== 0 && page * rowsPerPage >= data.length) {
+    setPage(0);
+  }
+
   return (
     <>
       <TableContainer className="max-h-[426px]">
@@ -61,6 +66,9 @@ export default function CustomTable({
             </TableRow>
           </TableHead>
           <TableBody>
+            {pagedData.length === 0 && (
+              <p className="pl-2 text-stone-400">No data...</p>
+            )}
             {pagedData?.map((t) => (
               <TableRow key={t?.[idColumn]}>
                 {Object.keys(columnDefinitions).map((key) => (

@@ -2,8 +2,12 @@ import { Alert, AlertTitle, Paper } from '@mui/material';
 import { useGetTagsQuery } from '../store/service/tags-api';
 import TableSkeleton from './UI/TableSkeleton';
 import CustomTable from './UI/CustomTable';
+import { useSelector } from 'react-redux';
+import { uiSelector } from '../store/slice/ui-slice';
 
 export default function TagTable() {
+  const { rowsPerPage } = useSelector(uiSelector);
+
   const { data, isLoading, isError } = useGetTagsQuery();
 
   if (isError) {
@@ -31,7 +35,7 @@ export default function TagTable() {
               name: { label: 'Name', className: '' },
               count: { label: 'Count' },
             }}
-            rowsPerPage={10}
+            rowsPerPage={rowsPerPage}
           />
         </Paper>
       )}
