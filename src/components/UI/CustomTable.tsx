@@ -27,19 +27,46 @@ type DataType = {
 type Order = 'asc' | 'desc';
 
 export interface CustomTableProps {
-  className?: string;
+  /**
+   * The list of data to be displayed. Each field has to be defined as a column in columnDefinitions prop.
+   */
   data: DataType[];
+  /**
+   * Column definitions with information about each of the columns.
+   *
+   * @param label(string)
+   * Column header label text
+   *
+   * @param numeric(number, optional)
+   * Is the field numeric?
+   *
+   * @param className(string, optional)
+   * Used for styling column cells
+   */
   columnDefinitions: ColumnDefinitions;
+  /**
+   * Name of the column that is used as an id for the key prop
+   */
   idColumn: string;
-  rowsPerPage: number;
+  /**
+   * How many rows should be displayed for each page?
+   */
+  rowsPerPage?: number;
+  /**
+   * Classname attribute for table container styling
+   */
+  className?: string;
 }
 
+/**
+ * Pageable table with column sorting
+ */
 export default function CustomTable({
-  className,
+  className = '',
   data,
   columnDefinitions,
   idColumn,
-  rowsPerPage,
+  rowsPerPage = 10,
 }: CustomTableProps) {
   const [page, setPage] = useState(0);
   const [orderBy, setOrderBy] = useState<string | null>(null);
