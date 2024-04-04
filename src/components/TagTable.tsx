@@ -7,7 +7,6 @@ import { uiSelector } from '../store/slice/ui-slice';
 
 export default function TagTable() {
   const { rowsPerPage } = useSelector(uiSelector);
-
   const { data, isLoading, isError } = useGetTagsQuery();
 
   if (isError) {

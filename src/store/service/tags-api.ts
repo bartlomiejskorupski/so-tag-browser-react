@@ -18,7 +18,10 @@ export const tagsApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://api.stackexchange.com/2.3' }),
   endpoints: (builder) => ({
     getTags: builder.query<TagsWrapper, void>({
-      query: () => ({ url: 'tags', params: { site: 'stackoverflow' } }),
+      query: () => ({
+        url: 'tags',
+        params: { site: 'stackoverflow', page: 1, pagesize: 100 },
+      }),
     }),
   }),
 });
