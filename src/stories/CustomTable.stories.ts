@@ -8,7 +8,7 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {},
+  argTypes: { rowsPerPage: { control: { min: 1, type: 'number' } } },
   args: {},
 } satisfies Meta<typeof CustomTable>;
 
@@ -115,5 +115,18 @@ export const EmployeeTable: Story = {
     },
     idColumn: 'id',
     rowsPerPage: 4,
+  },
+};
+
+export const Empty: Story = {
+  args: {
+    columnDefinitions: {
+      id: { label: 'ID' },
+      firstName: { label: 'First Name' },
+      lastName: { label: 'Last Name' },
+      email: { label: 'E-Mail' },
+    },
+    idColumn: 'id',
+    data: [],
   },
 };
